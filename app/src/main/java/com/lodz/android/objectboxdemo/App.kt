@@ -1,5 +1,6 @@
 package com.lodz.android.objectboxdemo
 
+import com.lodz.android.objectboxdemo.db.dao.ObjectBox
 import com.lodz.android.pandora.base.application.BaseApplication
 
 /**
@@ -13,6 +14,7 @@ class App :BaseApplication(){
     }
 
     override fun onStartCreate() {
+        ObjectBox.init(this)
         configTitleBarLayout()
     }
 
@@ -24,5 +26,6 @@ class App :BaseApplication(){
     }
 
     override fun onExit() {
+
     }
 }

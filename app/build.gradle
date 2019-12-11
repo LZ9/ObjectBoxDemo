@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -12,6 +13,13 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -22,4 +30,13 @@ android {
 
 dependencies {
     implementation 'com.lodz:pandora:1.2.1'
+
+    // web:[http://localhost:8090/index.html] ; adb command:[adb forward tcp:8090 tcp:8090]
+    debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.4.1"
+    releaseImplementation "io.objectbox:objectbox-android:2.4.1"
+    kapt "io.objectbox:objectbox-processor:2.4.1"
+    // support rxjava
+    implementation "io.objectbox:objectbox-rxjava:2.4.1"
 }
+// 一定要在dependencies底下调用
+apply plugin: 'io.objectbox'

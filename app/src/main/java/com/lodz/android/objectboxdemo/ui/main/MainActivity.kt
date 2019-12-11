@@ -1,4 +1,4 @@
-package com.lodz.android.objectboxdemo.ui
+package com.lodz.android.objectboxdemo.ui.main
 
 import android.os.Bundle
 import com.lodz.android.objectboxdemo.R
