@@ -21,7 +21,7 @@ class App :BaseApplication(){
     /** 配置标题栏 */
     private fun configTitleBarLayout() {
         getBaseLayoutConfig().getTitleBarLayoutConfig().isNeedBackBtn = true
-        getBaseLayoutConfig().getTitleBarLayoutConfig().backgroundColor = R.color.colorPrimaryDark
+        getBaseLayoutConfig().getTitleBarLayoutConfig().backgroundColor = R.color.colorPrimary
         getBaseLayoutConfig().getTitleBarLayoutConfig().titleTextColor = R.color.white
     }
 

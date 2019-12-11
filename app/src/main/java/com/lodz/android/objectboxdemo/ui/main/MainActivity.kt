@@ -1,15 +1,25 @@
 package com.lodz.android.objectboxdemo.ui.main
 
 import android.os.Bundle
+import com.google.android.material.button.MaterialButton
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.objectboxdemo.R
+import com.lodz.android.objectboxdemo.ui.normal.NormalActivity
+import com.lodz.android.objectboxdemo.ui.rx.RxActivity
+import com.lodz.android.objectboxdemo.ui.vm.VmActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 
 /**
+ * 主页
  * @author zhouL
  * @date 2019/12/10
  */
 class MainActivity : BaseActivity() {
+
+    private val mNormalBtn by bindView<MaterialButton>(R.id.normal_btn)
+    private val mRxBtn by bindView<MaterialButton>(R.id.rx_btn)
+    private val mJetpackBtn by bindView<MaterialButton>(R.id.jetpack_btn)
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -23,8 +33,45 @@ class MainActivity : BaseActivity() {
         titleBarLayout.needBackButton(false)
     }
 
+    override fun setListeners() {
+        super.setListeners()
+        mNormalBtn.setOnClickListener {
+            NormalActivity.start(getContext())
+        }
+
+        mRxBtn.setOnClickListener {
+            RxActivity.start(getContext())
+        }
+
+        mJetpackBtn.setOnClickListener {
+            VmActivity.start(getContext())
+        }
+    }
+
     override fun initData() {
         super.initData()
         showStatusCompleted()
     }
+
+//    fun <T> saveDataByDatabase(cls: Class<T>, data: T?) {
+//        data?.apply {
+//            val boxFor = ObjectBox.getBoxStore().boxFor(cls)
+//            boxFor.put(this)
+//        }
+//    }
+
+//    private fun addNote() {
+//    notesBox = ObjectBox.boxStore.boxFor()
+//        val noteText = editText.text.toString()
+//        editText.setText("")
+//
+//        val df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM)
+//        val comment = "Added on " + df.format(Date())
+//
+//        val note = Note(text = noteText, comment = comment, date = Date())
+//        notesBox.put(note)
+//        Log.d(App.TAG, "Inserted new note, ID: " + note.id)
+//
+//        updateNotes()
+//    }
 }

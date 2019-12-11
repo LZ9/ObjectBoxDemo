@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ObjectBoxDemo</string>
+
+    <string name="main_normal">普通调用</string>
+    <string name="main_rx">RxJava调用</string>
+    <string name="main_jetpack">Jetpack调用</string>
+    <string name="main_input_hint">请输入内容</string>
+    <string name="main_insert">新增</string>
+
+
 </resources>
