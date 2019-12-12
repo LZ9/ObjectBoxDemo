@@ -82,7 +82,7 @@ class NormalActivity : BaseActivity() {
         }
 
         mAdapter.setOnClickDeleteListener { bean ->
-            deleteData(bean)
+            ObjectBox.remove(NoteTableBean::class.java, bean)
             getNoteList()
         }
 
@@ -92,13 +92,19 @@ class NormalActivity : BaseActivity() {
     private fun insertData(content: String) {
         val title = if (content.length > 2) content.subSequence(0, 2).toString() else content
         val date = Date()
-        val box = ObjectBox.boxStore.boxFor(NoteTableBean::class.java)
-        box.put(NoteTableBean(title = title, content = content + " add on ${DateUtils.getFormatString(DateUtils.TYPE_2, date)}", date = date))
+        ObjectBox.put(
+            NoteTableBean::class.java,
+            NoteTableBean(
+                title = title,
+                content = content + " add on ${DateUtils.getFormatString(DateUtils.TYPE_2, date)}",
+                date = date
+            )
+        )
     }
 
     /** 更新数据，数据[bean] */
     private fun updateData(id: Long) {
-        val box = ObjectBox.boxStore.boxFor(NoteTableBean::class.java)
+        val box = ObjectBox.boxFor(NoteTableBean::class.java)
         val bean = box.query {
             equal(NoteTableBean_.id, id)
         }.findFirst()
@@ -108,13 +114,6 @@ class NormalActivity : BaseActivity() {
         }
     }
 
-    /** 删除数据，数据[bean] */
-    private fun deleteData(bean: NoteTableBean) {
-        val box = ObjectBox.boxStore.boxFor(NoteTableBean::class.java)
-        box.remove(bean)
-    }
-
-
     override fun initData() {
         super.initData()
         getNoteList()
@@ -123,7 +122,7 @@ class NormalActivity : BaseActivity() {
 
     /** 获取笔记列表 */
     private fun getNoteList(){
-        val box = ObjectBox.boxStore.boxFor(NoteTableBean::class.java)
+        val box = ObjectBox.boxFor(NoteTableBean::class.java)
         val list = box.query {
             order(NoteTableBean_.date, OrderFlags.DESCENDING)
         }.find()
