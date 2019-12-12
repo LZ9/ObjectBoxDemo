@@ -6,6 +6,7 @@
     <string name="main_jetpack">Jetpack调用</string>
     <string name="main_input_hint">请输入内容</string>
     <string name="main_insert">新增</string>
-
+    <string name="main_update">修改</string>
+    <string name="main_delete">删除</string>
 
 </resources>

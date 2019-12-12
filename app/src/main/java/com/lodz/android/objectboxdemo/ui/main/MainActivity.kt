@@ -52,26 +52,4 @@ class MainActivity : BaseActivity() {
         super.initData()
         showStatusCompleted()
     }
-
-//    fun <T> saveDataByDatabase(cls: Class<T>, data: T?) {
-//        data?.apply {
-//            val boxFor = ObjectBox.getBoxStore().boxFor(cls)
-//            boxFor.put(this)
-//        }
-//    }
-
-//    private fun addNote() {
-//    notesBox = ObjectBox.boxStore.boxFor()
-//        val noteText = editText.text.toString()
-//        editText.setText("")
-//
-//        val df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM)
-//        val comment = "Added on " + df.format(Date())
-//
-//        val note = Note(text = noteText, comment = comment, date = Date())
-//        notesBox.put(note)
-//        Log.d(App.TAG, "Inserted new note, ID: " + note.id)
-//
-//        updateNotes()
-//    }
 }

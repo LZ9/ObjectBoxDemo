@@ -20,7 +20,7 @@
             android:hint="@string/main_input_hint"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:maxLength="10"
+            android:maxLength="20"
             android:textSize="14sp" />
 
         <com.google.android.material.button.MaterialButton
