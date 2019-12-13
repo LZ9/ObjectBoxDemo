@@ -9,16 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.objectboxdemo.R
-import com.lodz.android.objectboxdemo.db.dao.ObjectBox
-import com.lodz.android.objectboxdemo.db.table.NoteTableBean
-import com.lodz.android.objectboxdemo.db.table.NoteTableBean_
+import com.lodz.android.objectboxdemo.db.dao.ObjectBoxImpl
 import com.lodz.android.objectboxdemo.ui.list.NoteListAdapter
 import com.lodz.android.pandora.base.activity.BaseActivity
-import io.objectbox.kotlin.query
-import io.objectbox.query.OrderFlags
-import java.util.*
 
 /**
  * 普通调用
@@ -82,7 +76,7 @@ class NormalActivity : BaseActivity() {
         }
 
         mAdapter.setOnClickDeleteListener { bean ->
-            ObjectBox.remove(NoteTableBean::class.java, bean)
+            ObjectBoxImpl.get().removeNote(bean).sync()
             getNoteList()
         }
 
@@ -90,28 +84,12 @@ class NormalActivity : BaseActivity() {
 
     /** 插入数据，内容[content] */
     private fun insertData(content: String) {
-        val title = if (content.length > 2) content.subSequence(0, 2).toString() else content
-        val date = Date()
-        ObjectBox.put(
-            NoteTableBean::class.java,
-            NoteTableBean(
-                title = title,
-                content = content + " add on ${DateUtils.getFormatString(DateUtils.TYPE_2, date)}",
-                date = date
-            )
-        )
+        ObjectBoxImpl.get().addNote(content).sync()
     }
 
     /** 更新数据，数据[bean] */
     private fun updateData(id: Long) {
-        val box = ObjectBox.boxFor(NoteTableBean::class.java)
-        val bean = box.query {
-            equal(NoteTableBean_.id, id)
-        }.findFirst()
-        bean?.apply {
-            this.title = DateUtils.getCurrentFormatString(DateUtils.TYPE_2)
-            box.put(this)
-        }
+        ObjectBoxImpl.get().updateNote(id).sync()
     }
 
     override fun initData() {
@@ -122,10 +100,7 @@ class NormalActivity : BaseActivity() {
 
     /** 获取笔记列表 */
     private fun getNoteList(){
-        val box = ObjectBox.boxFor(NoteTableBean::class.java)
-        val list = box.query {
-            order(NoteTableBean_.date, OrderFlags.DESCENDING)
-        }.find()
+       val list = ObjectBoxImpl.get().getNoteList().sync()
         mAdapter.setData(list)
         mAdapter.notifyDataSetChanged()
     }

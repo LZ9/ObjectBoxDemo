@@ -24,18 +24,4 @@ object ObjectBox {
     }
 
     fun <T> boxFor(cls: Class<T>): Box<T> = boxStore.boxFor(cls)
-
-    fun <T> put(cls: Class<T>, data: T?): Boolean {
-        val t = data ?: return false
-        val box = boxFor(cls)
-        box.put(t)
-        return true
-    }
-
-    fun <T> remove(cls: Class<T>, data: T?): Boolean {
-        val t = data ?: return false
-        val box = boxFor(cls)
-        return box.remove(t)
-    }
-
 }
