@@ -10,7 +10,7 @@ import com.google.android.material.button.MaterialButton
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.objectboxdemo.R
-import com.lodz.android.objectboxdemo.db.dao.ObjectBoxImpl
+import com.lodz.android.objectboxdemo.db.dao.rx.ObjectBoxRxImpl
 import com.lodz.android.objectboxdemo.db.table.NoteTableBean
 import com.lodz.android.objectboxdemo.ui.list.NoteListAdapter
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -87,10 +87,10 @@ class RxActivity : BaseActivity() {
     private fun insertData(content: String) {
         Observable.just(content)
             .flatMap {
-                ObjectBoxImpl.get().addNote(it).rx()
+                ObjectBoxRxImpl.get().addNote(it).rx()
             }
             .flatMap {
-                ObjectBoxImpl.get().getNoteList().rx()
+                ObjectBoxRxImpl.get().getNoteList().rx()
             }
             .compose(RxUtils.ioToMainObservable())
             .compose(bindDestroyEvent())
@@ -104,10 +104,10 @@ class RxActivity : BaseActivity() {
     private fun updateData(id: Long) {
         Observable.just(id)
             .flatMap {
-                ObjectBoxImpl.get().updateNote(it).rx()
+                ObjectBoxRxImpl.get().updateNote(it).rx()
             }
             .flatMap {
-                ObjectBoxImpl.get().getNoteList().rx()
+                ObjectBoxRxImpl.get().getNoteList().rx()
             }
             .compose(RxUtils.ioToMainObservable())
             .compose(bindDestroyEvent())
@@ -121,10 +121,10 @@ class RxActivity : BaseActivity() {
     private fun deleteData(bean: NoteTableBean) {
         Observable.just(bean)
             .flatMap {
-                ObjectBoxImpl.get().removeNote(it).rx()
+                ObjectBoxRxImpl.get().removeNote(it).rx()
             }
             .flatMap {
-                ObjectBoxImpl.get().getNoteList().rx()
+                ObjectBoxRxImpl.get().getNoteList().rx()
             }
             .compose(RxUtils.ioToMainObservable())
             .compose(bindDestroyEvent())
@@ -136,7 +136,7 @@ class RxActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        ObjectBoxImpl.get().getNoteList().rx()
+        ObjectBoxRxImpl.get().getNoteList().rx()
             .compose(RxUtils.ioToMainObservable())
             .compose(bindDestroyEvent())
             .subscribe(BaseObserver.action({ list ->

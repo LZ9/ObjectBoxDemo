@@ -1,4 +1,4 @@
-package com.lodz.android.objectboxdemo.db.dao
+package com.lodz.android.objectboxdemo.db.dao.rx
 
 import com.lodz.android.objectboxdemo.db.table.NoteTableBean
 import com.lodz.android.pandora.rx.utils.RxAgent

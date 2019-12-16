@@ -10,7 +10,7 @@ import com.google.android.material.button.MaterialButton
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.objectboxdemo.R
-import com.lodz.android.objectboxdemo.db.dao.ObjectBoxImpl
+import com.lodz.android.objectboxdemo.db.dao.rx.ObjectBoxRxImpl
 import com.lodz.android.objectboxdemo.ui.list.NoteListAdapter
 import com.lodz.android.pandora.base.activity.BaseActivity
 
@@ -76,7 +76,7 @@ class NormalActivity : BaseActivity() {
         }
 
         mAdapter.setOnClickDeleteListener { bean ->
-            ObjectBoxImpl.get().removeNote(bean).sync()
+            ObjectBoxRxImpl.get().removeNote(bean).sync()
             getNoteList()
         }
 
@@ -84,12 +84,12 @@ class NormalActivity : BaseActivity() {
 
     /** 插入数据，内容[content] */
     private fun insertData(content: String) {
-        ObjectBoxImpl.get().addNote(content).sync()
+        ObjectBoxRxImpl.get().addNote(content).sync()
     }
 
     /** 更新数据，数据[bean] */
     private fun updateData(id: Long) {
-        ObjectBoxImpl.get().updateNote(id).sync()
+        ObjectBoxRxImpl.get().updateNote(id).sync()
     }
 
     override fun initData() {
@@ -100,7 +100,7 @@ class NormalActivity : BaseActivity() {
 
     /** 获取笔记列表 */
     private fun getNoteList(){
-       val list = ObjectBoxImpl.get().getNoteList().sync()
+       val list = ObjectBoxRxImpl.get().getNoteList().sync()
         mAdapter.setData(list)
         mAdapter.notifyDataSetChanged()
     }
