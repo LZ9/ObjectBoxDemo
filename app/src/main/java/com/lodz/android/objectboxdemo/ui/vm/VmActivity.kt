@@ -58,6 +58,12 @@ class VmActivity : BaseVmActivity<VmViewModel>() {
         finish()
     }
 
+    override fun onClickReload() {
+        super.onClickReload()
+        showStatusLoading()
+        getViewModel().getNoteList()
+    }
+
     override fun setListeners() {
         super.setListeners()
 
@@ -79,7 +85,7 @@ class VmActivity : BaseVmActivity<VmViewModel>() {
             getViewModel().deleteData(bean)
         }
 
-        getViewModel().list.observe(this, Observer { list ->
+        getViewModel().mList.observe(this, Observer { list ->
             mAdapter.setData(list)
             mAdapter.notifyDataSetChanged()
             showStatusCompleted()

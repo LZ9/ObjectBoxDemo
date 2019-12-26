@@ -1,9 +1,12 @@
 package com.lodz.android.objectboxdemo.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.lodz.android.objectboxdemo.db.dao.rx.ObjectBoxRxImpl
+import com.lodz.android.corekt.anko.runOnMain
+import com.lodz.android.corekt.anko.runOnSuspendIOCatch
+import com.lodz.android.objectboxdemo.db.dao.suspend.ObjectBoxSuspendImpl
 import com.lodz.android.objectboxdemo.db.table.NoteTableBean
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
+import kotlinx.coroutines.GlobalScope
 
 /**
  * @author zhouL
@@ -11,24 +14,43 @@ import com.lodz.android.pandora.mvvm.vm.BaseViewModel
  */
 class VmViewModel :BaseViewModel(){
 
-    var list = MutableLiveData<MutableList<NoteTableBean>>()
+    var mList = MutableLiveData<MutableList<NoteTableBean>>()
 
     fun insertData(content: String) {
-        ObjectBoxRxImpl.get().addNote(content).sync()
-        getNoteList()
+        GlobalScope.runOnSuspendIOCatch({
+            ObjectBoxSuspendImpl.get().addNote(content)
+            getNoteList()
+        }, { e ->
+            showStatusError(e)
+        })
     }
 
     fun updateData(id: Long) {
-        ObjectBoxRxImpl.get().updateNote(id).sync()
-        getNoteList()
+        GlobalScope.runOnSuspendIOCatch({
+            ObjectBoxSuspendImpl.get().updateNote(id)
+            getNoteList()
+        }, { e ->
+            showStatusError(e)
+        })
     }
 
     fun deleteData(bean: NoteTableBean) {
-        ObjectBoxRxImpl.get().removeNote(bean).sync()
-        getNoteList()
+        GlobalScope.runOnSuspendIOCatch({
+            ObjectBoxSuspendImpl.get().removeNote(bean)
+            getNoteList()
+        }, { e ->
+            showStatusError(e)
+        })
     }
 
     fun getNoteList() {
-        list.value = ObjectBoxRxImpl.get().getNoteList().sync()
+        GlobalScope.runOnSuspendIOCatch({
+            val list = ObjectBoxSuspendImpl.get().getNoteList()
+            GlobalScope.runOnMain {
+                mList.value = list
+            }
+        }, { e ->
+            showStatusError(e)
+        })
     }
 }

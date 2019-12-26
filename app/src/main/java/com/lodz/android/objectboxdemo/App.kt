@@ -1,5 +1,6 @@
 package com.lodz.android.objectboxdemo
 
+import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.objectboxdemo.db.dao.ObjectBox
 import com.lodz.android.pandora.base.application.BaseApplication
 
@@ -14,6 +15,7 @@ class App :BaseApplication(){
     }
 
     override fun onStartCreate() {
+        NetworkManager.get().init(this)
         ObjectBox.init(this)
         configTitleBarLayout()
     }

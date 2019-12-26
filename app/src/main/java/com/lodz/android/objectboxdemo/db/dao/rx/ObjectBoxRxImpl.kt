@@ -18,12 +18,10 @@ import java.util.*
  * @author zhouL
  * @date 2019/12/12
  */
-class ObjectBoxRxImpl private constructor() :
-    DbRepository {
+class ObjectBoxRxImpl private constructor() : DbRxRepository {
 
     companion object {
-        fun get(): ObjectBoxRxImpl =
-            ObjectBoxRxImpl()
+        fun get(): ObjectBoxRxImpl = ObjectBoxRxImpl()
     }
 
     override fun addNote(content: String): RxAgent<Long> =
@@ -32,9 +30,7 @@ class ObjectBoxRxImpl private constructor() :
                 PrintLog.e("testtag", "addNote : ${Thread.currentThread().name}")
                 val title = if (content.length > 2) content.subSequence(0, 2).toString() else content
                 val date = Date()
-                val id = ObjectBox.boxFor(
-                    NoteTableBean::class.java
-                )
+                val id = ObjectBox.boxFor(NoteTableBean::class.java)
                     .put(NoteTableBean(title = title, content = content + " add on ${DateUtils.getFormatString(DateUtils.TYPE_2, date)}", date = date))
                 emitter.doNext(id)
                 emitter.doComplete()
@@ -48,9 +44,7 @@ class ObjectBoxRxImpl private constructor() :
         RxAgent(Observable.create { emitter ->
             try {
                 PrintLog.e("testtag", "getNoteList : ${Thread.currentThread().name}")
-                val list = ObjectBox.boxFor(
-                    NoteTableBean::class.java
-                )
+                val list = ObjectBox.boxFor(NoteTableBean::class.java)
                     .query {
                         order(NoteTableBean_.date, OrderFlags.DESCENDING)
                     }.find()
@@ -67,9 +61,7 @@ class ObjectBoxRxImpl private constructor() :
         RxAgent(Observable.create { emitter ->
             try {
                 PrintLog.e("testtag", "updateNote : ${Thread.currentThread().name}")
-                val box = ObjectBox.boxFor(
-                    NoteTableBean::class.java
-                )
+                val box = ObjectBox.boxFor(NoteTableBean::class.java)
                 val bean = box.query {
                     equal(NoteTableBean_.id, id)
                 }.findFirst()
@@ -91,9 +83,7 @@ class ObjectBoxRxImpl private constructor() :
         RxAgent(Observable.create { emitter ->
             try {
                 PrintLog.e("testtag", "removeNote : ${Thread.currentThread().name}")
-                val isSuccess = ObjectBox.boxFor(
-                    NoteTableBean::class.java
-                ).remove(bean)
+                val isSuccess = ObjectBox.boxFor(NoteTableBean::class.java).remove(bean)
                 emitter.doNext(isSuccess)
                 emitter.doComplete()
             } catch (e: Exception) {

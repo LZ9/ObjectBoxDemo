@@ -8,7 +8,7 @@ import com.lodz.android.pandora.rx.utils.RxAgent
  * @author zhouL
  * @date 2019/12/11
  */
-interface DbRepository {
+interface DbRxRepository {
 
     /** 新增笔记 */
     fun addNote(content: String): RxAgent<Long>
