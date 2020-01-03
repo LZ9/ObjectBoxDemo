@@ -39,7 +39,7 @@ class VmActivity : BaseVmActivity<VmViewModel>() {
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
-        getTitleBarLayout().setTitleName(R.string.main_normal)
+        getTitleBarLayout().setTitleName(R.string.main_jetpack)
         initRecyclerView()
     }
 
