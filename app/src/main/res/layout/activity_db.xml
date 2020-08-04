@@ -17,10 +17,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/bg_ffffff_corner_4_stroke_008577"
             android:hint="@string/main_input_hint"
             android:importantForAutofill="no"
             android:inputType="text"
             android:maxLength="20"
+            android:padding="8dp"
+            android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
 
         <com.google.android.material.button.MaterialButton
