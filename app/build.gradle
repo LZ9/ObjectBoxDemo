@@ -19,6 +19,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 
     buildTypes {
         release {
@@ -32,9 +35,9 @@ dependencies {
     implementation 'com.lodz:pandora:1.4.0'
 
     // web:[http://localhost:8090/index.html] ; adb command:[adb forward tcp:8090 tcp:8090]
-    debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.5.1"
-    releaseImplementation "io.objectbox:objectbox-android:2.5.1"
-    kapt "io.objectbox:objectbox-processor:2.5.1"
+    debugImplementation "io.objectbox:objectbox-android-objectbrowser:2.6.0"
+    releaseImplementation "io.objectbox:objectbox-android:2.6.0"
+    kapt "io.objectbox:objectbox-processor:2.6.0"
 }
 // 一定要在dependencies底下调用
 apply plugin: 'io.objectbox'
