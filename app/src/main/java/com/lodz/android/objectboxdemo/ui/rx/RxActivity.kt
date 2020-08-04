@@ -16,7 +16,7 @@ import com.lodz.android.objectboxdemo.ui.list.NoteListAdapter
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 /**
  * RxJava调用

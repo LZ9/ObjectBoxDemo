@@ -11,7 +11,7 @@ import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doNext
 import io.objectbox.kotlin.query
 import io.objectbox.query.OrderFlags
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import java.util.*
 
 /**
